@@ -1,0 +1,34 @@
+.grid {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+$breakpoints: (
+        xs: 32rem,
+        sm: 48rem,
+        md: 72rem,
+        lg: 96rem,
+        xl: 102rem,
+        xx: 120rem
+);
+
+$items: 12;
+
+@mixin break($size) {
+  @media (min-width: map-get($breakpoints, $size)) {
+    @content;
+  }
+}
+
+@each $key, $value in $breakpoints {
+  @for $i from 1 through $items {
+    .gridItem--#{$key}-span-#{$i} {
+
+      flex: 0 0 100%;
+      padding: 10px;
+      @include break($key) {
+        flex: 0 0 #{($i / $items * 100)+"%"};
+      }
+    }
+  }
+}

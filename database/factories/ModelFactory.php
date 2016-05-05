@@ -11,11 +11,27 @@
 |
 */
 
-$factory->define(App\User::class, function (Faker\Generator $faker) {
+$factory->define(App\TodoList::class, function (Faker\Generator $faker) {
+
+    $icons = array("fa-cog","fa-eye","fa-star","fa-pied-piper");
+
     return [
         'name' => $faker->name,
-        'email' => $faker->safeEmail,
-        'password' => bcrypt(str_random(10)),
-        'remember_token' => str_random(10),
+        'icon' => $icons[array_rand($icons)]
+    ];
+});
+
+
+$factory->define(App\Todo::class, function (Faker\Generator $faker) {
+
+    $priorities = array('low','medium','high');
+
+    $statuses = array('complete','not_complete');
+
+    return [
+        'task' => $faker->name,
+        'due_date' => $faker->dateTimeBetween('this week', '+20 days'),
+        'priority' => $priorities[array_rand($priorities)],
+        'status' => $priorities[array_rand($statuses)],
     ];
 });

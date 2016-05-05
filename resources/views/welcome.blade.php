@@ -1,45 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="todoApp">
     <head>
-        <title>Laravel</title>
-
-        <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
-
-        <style>
-            html, body {
-                height: 100%;
-            }
-
-            body {
-                margin: 0;
-                padding: 0;
-                width: 100%;
-                display: table;
-                font-weight: 100;
-                font-family: 'Lato';
-            }
-
-            .container {
-                text-align: center;
-                display: table-cell;
-                vertical-align: middle;
-            }
-
-            .content {
-                text-align: center;
-                display: inline-block;
-            }
-
-            .title {
-                font-size: 96px;
-            }
-        </style>
+        <title>Angular To-Do Demo</title>
+        <link rel="stylesheet" type="text/css" href="/css/app.css">
     </head>
     <body>
         <div class="container">
-            <div class="content">
-                <div class="title">Laravel 5</div>
+            <div class="content grid" ng-controller="TodoListController as tlc">
+                <div class="gridItem--lg-span-3 gridItem--md-span-4" ng-repeat="list in tlc.todoLists">
+                    <i class="fa" ng-class="list.icon" ></i> Name: @{{ list.name }} <i class="fa fa-times" ng-click="tlc.removeList(list)"></i>
+                    <div class="task" ng-repeat="todo in list.todos">
+                        Task: @{{todo.task}}
+                    </div>
+                </div>
             </div>
         </div>
+    <script src="/js/main.js"></script>
     </body>
 </html>

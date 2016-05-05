@@ -14,3 +14,12 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::group(['prefix'=>'api','middleware'=>['api']],function(){
+    Route::group(['prefix'=>'v1'],function(){
+        Route::resource('todoList','TodoListController',
+            ['except' => ['create', 'edit']]);
+        Route::resource('todoList.todo','TodoController',
+            ['except' => ['create', 'edit']]);
+    });
+});

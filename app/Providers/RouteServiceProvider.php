@@ -24,7 +24,8 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
-        //
+        $router->model('todoList','App\TodoList');
+        $router->model('todo','App\Todo');
 
         parent::boot($router);
     }
