@@ -6,31 +6,24 @@
     -webkit-transition: 0.5s linear all;
     -moz-transition: 0.5s linear all;
     -o-transition: 0.5s linear all;
-    transition: 0.5s linear all;
+    transition: 0.5s linear opacity;
   }
 
   &.ng-enter,
   &.ng-move {
     opacity: 0;
-    height: 0;
-    overflow: hidden;
   }
 
   &.ng-move.ng-move-active,
   &.ng-enter.ng-enter-active {
     opacity: 1;
-    height: 20px;
   }
 
   &.ng-leave {
     opacity: 1;
-    overflow: hidden;
   }
 
   &.ng-leave.ng-leave-active {
     opacity: 0;
-    height: 0;
-    padding-top: 0;
-    padding-bottom: 0;
   }
 }

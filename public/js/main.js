@@ -35799,19 +35799,120 @@ require('./angular');
 module.exports = angular;
 
 },{"./angular":5}],7:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var TodoAppController = function () {
+  function TodoAppController(TodoListService) {
+    _classCallCheck(this, TodoAppController);
+
+    // Save dependencies
+    this.TodoListService = TodoListService;
+
+    // Set initial state
+    this.todoLists = [];
+    this.loadingTodos = true;
+
+    // Load To-Do lists
+    this.fetchTodoLists();
+  }
+
+  _createClass(TodoAppController, [{
+    key: "fetchTodoLists",
+    value: function fetchTodoLists() {
+      var _this = this;
+
+      this.TodoListService.fetchAll().$promise.then(function (response) {
+        _this.loadingTodos = false;
+        _this.todoLists = response;
+      });
+    }
+  }, {
+    key: "deleteTodoList",
+    value: function deleteTodoList(list) {
+      this.TodoListService.deleteTodoList(list);
+      var index = this.todoLists.indexOf(list);
+      this.todoLists.splice(index, 1);
+    }
+  }]);
+
+  return TodoAppController;
+}();
+
+exports.default = TodoAppController;
+exports.default = {
+  template: "\n  <div class=\"content grid\">\n      <div ng-repeat=\"todoList in $ctrl.todoLists\" class=\"gridItem--md-span-6 gridItem--sm-span-12 animated\">\n          <todo-list list=\"todoList\" \n            delete-todo-list=\"$ctrl.deleteTodoList(todoList)\"\n            >\n          </todo-list>\n      </div>\n  </div>\n  ",
+  controller: TodoAppController
+};
+
+},{}],8:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var TodoController = function TodoController() {
+  _classCallCheck(this, TodoController);
+};
+
 exports.default = {
-  template: '\n  <div class="TodoList">\n    <h3 class="TodoList-title">\n      <i class="TodoList-icon fa fa" ng-class="$ctrl.list.icon"></i>\n         {{ $ctrl.list.name }}\n      <i class="TodoList-delete fa fa-times u-floatRight" ng-click="removeList($ctrl.list)"></i>\n    </h3>\n    <div class="TodoList-todos" ng-repeat="todo in $ctrl.list.todos">\n      <input id="{{\'task\' + todo.id}}" type="checkbox" /><label for="{{\'task\' + todo.id}}">{{todo.task}}</label>\n    </div>\n  </div>',
+  template: '\n    <div class="Todo task">\n      <input id="{{\'task\' + $ctrl.todo.id}}" type="checkbox" />\n      <label for="{{\'task\' + $ctrl.todo.id}}">{{$ctrl.todo.task}}</label>\n      <span class="Todo-deleteButton u-floatRight">\n        <i class="fa fa-times" ng-click="$ctrl.deleteTodo()"></i>\n      </span>\n    </div>\n  ',
   bindings: {
-    list: '='
+    todo: '=',
+    deleteTodo: '&'
   }
 };
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var TodoListController = function () {
+  function TodoListController(TodoService) {
+    _classCallCheck(this, TodoListController);
+
+    this.TodoService = TodoService;
+  }
+
+  _createClass(TodoListController, [{
+    key: 'deleteTodo',
+    value: function deleteTodo(todo) {
+      this.TodoService.deleteTodoList({ listId: this.list.id, id: todo.id });
+      var index = this.list.todos.indexOf(todo);
+      this.list.todos.splice(index, 1);
+    }
+  }]);
+
+  return TodoListController;
+}();
+
+exports.default = {
+  template: '\n  <div class="TodoList">\n    <i class="TodoList-delete fa fa-times fa-2x u-floatRight" ng-click="$ctrl.deleteTodoList()"></i>\n    <h3 class="TodoList-title">\n      <i class="TodoList-icon fa fa" ng-class="$ctrl.list.icon"></i>\n         {{ $ctrl.list.name }}\n    </h3>\n    <div class="TodoList-todos animated" ng-repeat="todo in $ctrl.list.todos">\n      <todo todo="todo" delete-todo="$ctrl.deleteTodo(todo)"></todo>\n    </div>\n  </div>',
+  controller: TodoListController,
+  bindings: {
+    list: '=',
+    deleteTodoList: '&'
+  }
+};
+
+},{}],10:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35825,70 +35926,28 @@ exports.default = {
   API_URL: API_URL
 };
 
-},{}],9:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var TodoListController = function () {
-  function TodoListController(TodoListService) {
-    _classCallCheck(this, TodoListController);
-
-    // Save dependencies
-    this.TodoListService = TodoListService;
-
-    // Set initial state
-    this.todoLists = [];
-    this.loadingTodos = true;
-
-    // Load To-Do lists
-    this.fetchTodoLists();
-  }
-
-  _createClass(TodoListController, [{
-    key: "fetchTodoLists",
-    value: function fetchTodoLists() {
-      var _this = this;
-
-      this.TodoListService.fetchAll().$promise.then(function (response) {
-        _this.loadingTodos = false;
-        _this.todoLists = response;
-      });
-    }
-  }, {
-    key: "removeList",
-    value: function removeList(list) {
-      var index = this.todoLists.indexOf(list);
-      this.todoLists.splice(index, 1);
-      this.TodoListService.deleteTodoList(list);
-    }
-  }]);
-
-  return TodoListController;
-}();
-
-exports.default = TodoListController;
-
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 'use strict';
-
-var _TodoListController = require('./controllers/TodoListController');
-
-var _TodoListController2 = _interopRequireDefault(_TodoListController);
 
 var _TodoListService = require('./services/TodoListService');
 
 var _TodoListService2 = _interopRequireDefault(_TodoListService);
 
+var _TodoService = require('./services/TodoService');
+
+var _TodoService2 = _interopRequireDefault(_TodoService);
+
+var _TodoAppComponent = require('./components/TodoAppComponent');
+
+var _TodoAppComponent2 = _interopRequireDefault(_TodoAppComponent);
+
 var _TodoListComponent = require('./components/TodoListComponent');
 
 var _TodoListComponent2 = _interopRequireDefault(_TodoListComponent);
+
+var _TodoComponent = require('./components/TodoComponent');
+
+var _TodoComponent2 = _interopRequireDefault(_TodoComponent);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -35896,9 +35955,9 @@ var angular = require('angular');
 require('angular-resource');
 require('angular-animate');
 
-var todoApp = angular.module('todoApp', ['ngResource', 'ngAnimate']).service('TodoListService', _TodoListService2.default).controller('TodoListController', _TodoListController2.default).component('todoList', _TodoListComponent2.default);
+var todoApp = angular.module('todoApp', ['ngResource', 'ngAnimate']).service('TodoListService', _TodoListService2.default).service('TodoService', _TodoService2.default).component('todoApp', _TodoAppComponent2.default).component('todo', _TodoComponent2.default).component('todoList', _TodoListComponent2.default);
 
-},{"./components/TodoListComponent":7,"./controllers/TodoListController":9,"./services/TodoListService":11,"angular":6,"angular-animate":2,"angular-resource":4}],11:[function(require,module,exports){
+},{"./components/TodoAppComponent":7,"./components/TodoComponent":8,"./components/TodoListComponent":9,"./services/TodoListService":12,"./services/TodoService":13,"angular":6,"angular-animate":2,"angular-resource":4}],12:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35941,6 +36000,50 @@ var TodoListService = function () {
 
 exports.default = TodoListService;
 
-},{"./../config":8}]},{},[10]);
+},{"./../config":10}],13:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _config = require("./../config");
+
+var _config2 = _interopRequireDefault(_config);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var TodoService = function () {
+  function TodoService($resource) {
+    _classCallCheck(this, TodoService);
+
+    this.Todos = $resource(_config2.default.API_URL + "/todoList/:todoListId/todo/:todoId");
+  }
+
+  _createClass(TodoService, [{
+    key: "fetchAll",
+    value: function fetchAll() {
+      return this.Todos.query();
+    }
+  }, {
+    key: "deleteTodoList",
+    value: function deleteTodoList(_ref) {
+      var id = _ref.id;
+      var listId = _ref.listId;
+
+      return this.Todos.remove({ todoListId: listId, todoId: id });
+    }
+  }]);
+
+  return TodoService;
+}();
+
+exports.default = TodoService;
+
+},{"./../config":10}]},{},[11]);
 
 //# sourceMappingURL=main.js.map

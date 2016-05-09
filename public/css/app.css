@@ -3173,28 +3173,27 @@ label {
   border: 1px solid black;
   padding: 10px; }
   .TodoList-title {
-    margin-top: 0; }
+    margin-top: 0;
+    margin-bottom: 4px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #eeeeee; }
 
-.task.ng-enter, .task.ng-leave, .task.ng-move {
-  transition: 0.5s linear all; }
+.Todo-deleteButton {
+  color: #d9534f; }
 
-.task.ng-enter, .task.ng-move {
-  opacity: 0;
-  height: 0;
-  overflow: hidden; }
+.animated.ng-enter, .animated.ng-leave, .animated.ng-move {
+  transition: 0.5s linear opacity; }
 
-.task.ng-move.ng-move-active, .task.ng-enter.ng-enter-active {
-  opacity: 1;
-  height: 20px; }
+.animated.ng-enter, .animated.ng-move {
+  opacity: 0; }
 
-.task.ng-leave {
-  opacity: 1;
-  overflow: hidden; }
+.animated.ng-move.ng-move-active, .animated.ng-enter.ng-enter-active {
+  opacity: 1; }
 
-.task.ng-leave.ng-leave-active {
-  opacity: 0;
-  height: 0;
-  padding-top: 0;
-  padding-bottom: 0; }
+.animated.ng-leave {
+  opacity: 1; }
+
+.animated.ng-leave.ng-leave-active {
+  opacity: 0; }
 
 /*# sourceMappingURL=app.css.map */

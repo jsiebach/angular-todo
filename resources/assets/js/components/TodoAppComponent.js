@@ -1,5 +1,5 @@
-class TodoListController {
-  
+class TodoAppController {
+
   constructor(TodoListService){
 
     // Save dependencies
@@ -22,12 +22,26 @@ class TodoListController {
         })
   }
 
-  removeList(list){
+  deleteTodoList(list){
+    this.TodoListService.deleteTodoList(list)
     var index = this.todoLists.indexOf(list)
     this.todoLists.splice(index, 1)
-    this.TodoListService.deleteTodoList(list)
   }
-  
+
 }
 
-export default TodoListController
+export default TodoAppController
+
+export default {
+  template:`
+  <div class="content grid">
+      <div ng-repeat="todoList in $ctrl.todoLists" class="gridItem--md-span-6 gridItem--sm-span-12 animated">
+          <todo-list list="todoList" 
+            delete-todo-list="$ctrl.deleteTodoList(todoList)"
+            >
+          </todo-list>
+      </div>
+  </div>
+  `,
+  controller:TodoAppController
+}

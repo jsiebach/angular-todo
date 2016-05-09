@@ -9,11 +9,7 @@
     <body>
         <div class="container">
             <h1 class="u-textCenter">To-Do List</h1>
-            <div class="content grid" ng-controller="TodoListController as tlc">
-                <div ng-repeat="todoList in tlc.todoLists" class="gridItem--md-span-6 gridItem--sm-span-12">
-                    <todo-list list="todoList"></todo-list>
-                </div>
-            </div>
+            <todo-app></todo-app>
         </div>
     <script src="/js/main.js"></script>
     </body>
