@@ -3,8 +3,10 @@ require('angular-resource')
 require('angular-animate')
 
 import TodoListController from "./controllers/TodoListController"
-import todoListService from "./services/TodoListService"
+import TodoListService from "./services/TodoListService"
+import todoList from "./components/TodoListComponent"
 
 var todoApp = angular.module('todoApp', ['ngResource','ngAnimate'])
-    .service('todoListService', todoListService)
-    .controller('TodoListController', TodoListController);
+    .service('TodoListService', TodoListService)
+    .controller('TodoListController', TodoListController)
+    .component('todoList', todoList);

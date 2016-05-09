@@ -5,6 +5,10 @@ $fa-font-path: "/fonts";
 @import "./variables";
 @import "./mixins";
 @import "./grid";
+@import "./utilities";
+@import "./type";
+@import "./forms";
+@import "./components/todo-list";
 
 .task {
   @include trans()

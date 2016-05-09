@@ -3,6 +3,10 @@
   flex-flow: row wrap;
 }
 
+body {
+  margin: 0;
+}
+
 $breakpoints: (
         xs: 32rem,
         sm: 48rem,
@@ -22,13 +26,16 @@ $items: 12;
 
 @each $key, $value in $breakpoints {
   @for $i from 1 through $items {
-    .gridItem--#{$key}-span-#{$i} {
-
-      flex: 0 0 100%;
-      padding: 10px;
+    .grid .gridItem--#{$key}-span-#{$i} {
       @include break($key) {
-        flex: 0 0 #{($i / $items * 100)+"%"};
+        flex: 0 0 #{($i / $items * 96)+"%"};
+        padding: #{($i / $items * 2)+"%"};
       }
     }
+    .gridItem--#{$key}-span-#{$i} {
+      flex: 0 0 96%;
+      padding: 2%;
+    }
+
   }
 }

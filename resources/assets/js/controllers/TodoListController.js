@@ -1,10 +1,12 @@
 class TodoListController {
   
-  constructor(todoListService){
+  constructor(TodoListService){
 
-    // Initial state
+    // Save dependencies
+    this.TodoListService = TodoListService
+
+    // Set initial state
     this.todoLists = []
-    this.TodoListService = todoListService
     this.loadingTodos = true
 
     // Load To-Do lists

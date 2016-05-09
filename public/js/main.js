@@ -35799,6 +35799,19 @@ require('./angular');
 module.exports = angular;
 
 },{"./angular":5}],7:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {
+  template: '\n  <div class="TodoList">\n    <h3 class="TodoList-title">\n      <i class="TodoList-icon fa fa" ng-class="$ctrl.list.icon"></i>\n         {{ $ctrl.list.name }}\n      <i class="TodoList-delete fa fa-times u-floatRight" ng-click="removeList($ctrl.list)"></i>\n    </h3>\n    <div class="TodoList-todos" ng-repeat="todo in $ctrl.list.todos">\n      <input id="{{\'task\' + todo.id}}" type="checkbox" /><label for="{{\'task\' + todo.id}}">{{todo.task}}</label>\n    </div>\n  </div>',
+  bindings: {
+    list: '='
+  }
+};
+
+},{}],8:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35812,7 +35825,7 @@ exports.default = {
   API_URL: API_URL
 };
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35824,12 +35837,14 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var TodoListController = function () {
-  function TodoListController(todoListService) {
+  function TodoListController(TodoListService) {
     _classCallCheck(this, TodoListController);
 
-    // Initial state
+    // Save dependencies
+    this.TodoListService = TodoListService;
+
+    // Set initial state
     this.todoLists = [];
-    this.TodoListService = todoListService;
     this.loadingTodos = true;
 
     // Load To-Do lists
@@ -35860,7 +35875,7 @@ var TodoListController = function () {
 
 exports.default = TodoListController;
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 'use strict';
 
 var _TodoListController = require('./controllers/TodoListController');
@@ -35871,15 +35886,19 @@ var _TodoListService = require('./services/TodoListService');
 
 var _TodoListService2 = _interopRequireDefault(_TodoListService);
 
+var _TodoListComponent = require('./components/TodoListComponent');
+
+var _TodoListComponent2 = _interopRequireDefault(_TodoListComponent);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var angular = require('angular');
 require('angular-resource');
 require('angular-animate');
 
-var todoApp = angular.module('todoApp', ['ngResource', 'ngAnimate']).service('todoListService', _TodoListService2.default).controller('TodoListController', _TodoListController2.default);
+var todoApp = angular.module('todoApp', ['ngResource', 'ngAnimate']).service('TodoListService', _TodoListService2.default).controller('TodoListController', _TodoListController2.default).component('todoList', _TodoListComponent2.default);
 
-},{"./controllers/TodoListController":8,"./services/TodoListService":10,"angular":6,"angular-animate":2,"angular-resource":4}],10:[function(require,module,exports){
+},{"./components/TodoListComponent":7,"./controllers/TodoListController":9,"./services/TodoListService":11,"angular":6,"angular-animate":2,"angular-resource":4}],11:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35922,6 +35941,6 @@ var TodoListService = function () {
 
 exports.default = TodoListService;
 
-},{"./../config":7}]},{},[9]);
+},{"./../config":8}]},{},[10]);
 
 //# sourceMappingURL=main.js.map

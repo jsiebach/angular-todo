@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html ng-app="todoApp">
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Angular To-Do Demo</title>
         <link rel="stylesheet" type="text/css" href="/css/app.css">
+        <link href='https://fonts.googleapis.com/css?family=Lato:400,300,300italic,700,400italic,700italic,100italic,100' rel='stylesheet' type='text/css'>
     </head>
     <body>
         <div class="container">
+            <h1 class="u-textCenter">To-Do List</h1>
             <div class="content grid" ng-controller="TodoListController as tlc">
-                <div class="gridItem--lg-span-3 gridItem--md-span-4" ng-repeat="list in tlc.todoLists">
-                    <i class="fa" ng-class="list.icon" ></i> Name: @{{ list.name }} <i class="fa fa-times" ng-click="tlc.removeList(list)"></i>
-                    <div class="task" ng-repeat="todo in list.todos">
-                        Task: @{{todo.task}}
-                    </div>
+                <div ng-repeat="todoList in tlc.todoLists" class="gridItem--md-span-6 gridItem--sm-span-12">
+                    <todo-list list="todoList"></todo-list>
                 </div>
             </div>
         </div>
