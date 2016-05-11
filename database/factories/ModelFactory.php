@@ -30,8 +30,8 @@ $factory->define(App\Todo::class, function (Faker\Generator $faker) {
 
     return [
         'task' => $faker->name,
-        'due_date' => $faker->dateTimeBetween('this week', '+20 days')->format('Y-m-d h:i:s'),
+        'due_date' => $faker->dateTimeBetween('+5 days', '+20 days')->format('Y-m-d h:i:s'),
         'priority' => $priorities[array_rand($priorities)],
-        'status' => $priorities[array_rand($statuses)],
+        'status' => $statuses[array_rand($statuses)],
     ];
 });

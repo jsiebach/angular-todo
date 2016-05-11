@@ -33,10 +33,27 @@ class TodoListTest extends TestCase
                     'id',
                     'name',
                     'icon',
-                    'todos'
+                    'todos'=>[
+                        '*'=>[]
+                    ]
                 ]
             ])
             ->assertResponseStatus(200);
+    }
+
+    public function testIconMustMatchFontAwesomeRegex()
+    {
+
+        $todo = factory(App\TodoList::class)->make(['icon'=>'fafa-bad']);
+
+        $this->json('post','/api/v1/todoList',$todo->getAttributes())
+            ->seeJson([
+                'icon'=>['Icon must be a FontAwesome Icon']
+            ])
+            ->dontSeeInDatabase('todo_lists',[
+                'id'=>1
+            ])
+            ->assertResponseStatus(422);
     }
 
     public function testCreateTodoList()
@@ -66,6 +83,9 @@ class TodoListTest extends TestCase
                 'icon',
                 'todos'
             ])
+            ->dontSeeInDatabase('todo_lists',[
+                'id'=>1
+            ])
             ->assertResponseStatus(200);
     }
 
@@ -80,6 +100,11 @@ class TodoListTest extends TestCase
             'icon'=>'fa-good'
         ])
             ->seeJsonContains([
+                'id'=>1,
+                'name'=>'Good',
+                'icon'=>'fa-good'
+            ])
+            ->seeInDatabase('todo_lists',[
                 'id'=>1,
                 'name'=>'Good',
                 'icon'=>'fa-good'

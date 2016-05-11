@@ -26,12 +26,18 @@ class TodoRequest extends Request
         switch($this->getMethod()){
             case 'POST':
                 return [
-                    'task' => 'required|unique:todos,task|min:1|max:255'
+                    'task' => 'required|unique:todos,task|min:1|max:255',
+                    'status'=>'required|in:complete,not_complete',
+                    'priority'=>'required|in:high,medium,low',
+                    'due_date'=>'required|date|after:now'
                 ];
             case 'PATCH':
             case 'PUT':
                 return [
-                    'task' => 'required|unique:todos,task,'.$this->get('id').'|min:1|max:255'
+                    'task' => 'unique:todos,task,'.$this->get('id').'|min:1|max:255',
+                    'status'=>'in:complete,not_complete',
+                    'priority'=>'in:high,medium,low',
+                    'due_date'=>'date'
                 ];
             default:
                 return [];

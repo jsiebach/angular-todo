@@ -16,6 +16,13 @@ class TodoListRequest extends Request
         return true;
     }
 
+    public function messages()
+    {
+        $messages = parent::messages();
+        $messages['icon.regex'] = "Icon must be a FontAwesome Icon";
+        return $messages;
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -26,12 +33,14 @@ class TodoListRequest extends Request
         switch($this->getMethod()){
             case 'POST':
                 return [
-                    'name' => 'required|unique:todo_lists,name|min:1|max:255'
+                    'name' => 'required|unique:todo_lists,name|min:1|max:255',
+                    'icon' => ['required','regex:/^fa\-/']
                 ];
             case 'PATCH':
             case 'PUT':
                 return [
-                    'name' => 'required|unique:todo_lists,name,'.$this->get('id').'|min:1|max:255'
+                    'name' => 'unique:todo_lists,name,'.$this->get('id').'|min:1|max:255',
+                    'icon' => ['regex:/^fa\-/']
                 ];
             default:
                 return [];
