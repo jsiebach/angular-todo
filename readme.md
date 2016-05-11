@@ -1,24 +1,24 @@
 # Angular/Laravel To-do app
 
-## Back End To-do
+## Back End
 
 ### To-do Lists
 
 * ~~DB Migration~~
 * ~~Resource Controller~~
 * ~~HttpRequest Validation~~
-* Unit Tests
+* ~~Unit Tests~~
 * Repository
 
 ### To-do Tasks
 
 * ~~DB Migration~~
 * ~~Resource Controller~~
-* ~~HttpRequest Validation~~
+* ~~Request Validation~~
 * Unit Tests
 * Repository
 
-## Front End To-do
+## Front End
 
 ### To-do Lists
 

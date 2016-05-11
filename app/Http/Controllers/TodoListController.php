@@ -29,6 +29,8 @@ class TodoListController extends Controller
     {
         $list = TodoList::create($request->all());
 
+        $list->load('todos');
+
         return response()->json($list);
     }
 
@@ -53,6 +55,8 @@ class TodoListController extends Controller
     public function update(TodoListRequest $request, TodoList $list)
     {
         $list->update($request->all());
+
+        return response()->json($list);
     }
 
     /**
@@ -64,6 +68,7 @@ class TodoListController extends Controller
     public function destroy(TodoList $list)
     {
         $list->delete();
+
         return response()->json($list);
     }
 }

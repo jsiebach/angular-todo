@@ -9,6 +9,7 @@
     <body>
         <div class="container">
             <h1 class="u-textCenter">To-Do List</h1>
+            {{database_path('database.sqlite')}}
             <todo-app></todo-app>
         </div>
     <script src="/js/main.js"></script>
