@@ -20,6 +20,7 @@ class CreateTodosTable extends Migration
             $table->string('priority');
             $table->string('status');
             $table->timestamps();
+            $table->softDeletes();
         });
 
 //        Schema::table('todos',  function (Blueprint $table) {

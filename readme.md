@@ -15,7 +15,7 @@
 * ~~DB Migration~~
 * ~~Resource Controller~~
 * ~~Request Validation~~
-* Unit Tests
+* ~~Unit Tests~~
 * Repository
 
 ## Front End

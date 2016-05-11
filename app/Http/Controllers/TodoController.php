@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\TodoList;
@@ -30,9 +31,9 @@ class TodoController extends Controller
      */
     public function store(TodoRequest $request, TodoList $list)
     {
-        $list->todos()->create($request->all());
+        $todo = $list->todos()->create($request->all());
 
-        return response()->json($list);
+        return response()->json($todo);
     }
 
     /**
@@ -58,6 +59,8 @@ class TodoController extends Controller
     public function update(TodoList $list, Todo $todo, TodoRequest $request)
     {
         $todo->update($request->all());
+
+        return response()->json($todo);
     }
 
     /**
@@ -70,6 +73,7 @@ class TodoController extends Controller
     public function destroy(TodoList $list, Todo $todo)
     {
         $todo->delete();
+
         return response()->json($todo);
     }
 }

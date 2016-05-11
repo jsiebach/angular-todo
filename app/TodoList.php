@@ -11,6 +11,7 @@ class TodoList extends Model
     public $fillable = ['name','icon'];
 
     public function todos(){
-        return $this->hasMany(\App\Todo::class);
+        return $this->hasMany(Todo::class);
     }
 }
+
